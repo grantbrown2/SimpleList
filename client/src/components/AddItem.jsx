@@ -59,6 +59,10 @@ const AddItem = ({onClose, listItemId, list, setList, updateList}) => {
         return isValid
     }
 
+    const handleCancel = () => {
+        onClose();
+    }
+
     return (
         <div className='add-list'>
             <form onSubmit={handleSubmit} className='add-form'>
@@ -73,6 +77,7 @@ const AddItem = ({onClose, listItemId, list, setList, updateList}) => {
                     <input type="text" onChange={(e)=>{setCategory(e.target.value)}} onBlur={validation} className='category-input'/>
                 </div>
                 <input type="submit" value="Add Item To List" className='submit-button'/>
+                <button className='cancel-button' onClick={handleCancel}>Cancel</button>
             </form>
         </div>
     )

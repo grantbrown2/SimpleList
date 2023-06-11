@@ -45,6 +45,35 @@ const ShowAllLists = (props) => {
         }));
     };
 
+    const handleUpdateItemClick = (listItemId, itemId) => {
+        setList(list.map((listItem) => {
+            if (listItem._id === listItemId) {
+                return {
+                    ...listItem,
+                    isEditing: true,
+                    selectedItem: itemId
+                };
+            }
+            return {
+                ...listItem,
+                isEditing: false,
+                selectedItem: null
+            };
+        }));
+    };
+
+    const handleUpdateItemClose = (listItemId) => {
+        setList(list.map(listItem => {
+            if (listItem._id === listItemId) {
+                return {
+                    ...listItem,
+                    isEditing: false
+                };
+            }
+            return listItem;
+        }));
+    };
+
     const deleteList = (id) => {
         return axios.delete(`http://localhost:8000/api/delete/list/${id}`);
     };
@@ -83,14 +112,14 @@ const ShowAllLists = (props) => {
                                 <br />
                                 <span className='item-name'>{item.itemName}</span>
                                 <input type="checkbox"/>
-                                <button onClick={() => handleAddItemClick(listItem._id)}>Edit</button>
+                                <button onClick={() => handleUpdateItemClick(listItem._id, item._id)}>Edit</button>
                                 <button>Delete</button>
                             </li>
                         ))}
                     </ul>
-                    {listItem.showForm && <EditItem onClose={() => handleAddItemClose(listItem._id)} updateList={handleUpdateList} listItemId={listItem._id} list={list} setList={setList}/>}
-                    {listItem.showForm && <AddItem onClose={() => handleAddItemClose(listItem._id)} updateList={handleUpdateList} listItemId={listItem._id} list={list} setList={setList}/>}
-                    {!listItem.showForm && <button className='button' onClick={() => handleAddItemClick(listItem._id)}>Add Item</button>}
+                    {listItem.isEditing && <EditItem onClose={() => handleUpdateItemClose(listItem._id)} updateList={handleUpdateList} listItemId={listItem._id} itemId={listItem.selectedItem} list={list} setList={setList}/>}
+                    {listItem.showForm && <AddItem onClose={() => handleAddItemClose(listItem._id)} updateList={handleUpdateList} listItemId={listItem._id} list={list} setList={setList} handleAddItemClose={handleAddItemClose}/>}
+                    {!listItem.showForm && !listItem.isEditing && <button className='button' onClick={() => handleAddItemClick(listItem._id)}>Add Item</button>}
                 </div>
             ))}
         </div>

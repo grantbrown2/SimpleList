@@ -19,7 +19,7 @@ const NavBar = (props) => {
     return (
         <div className='nav-bar'>
             <div className='header'>
-                <h1>Todo List</h1>
+                <h1>TodoList</h1>
                 <p className='credits'>by: Grant Brown</p>
             </div>
             <div className='container'>

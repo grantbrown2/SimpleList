@@ -44,9 +44,10 @@ module.exports.addItemToList = (req, res) => {
     .catch(err => res.status(500).json(err));
 }
 module.exports.showItem = (req, res) => {
-    TodoList.findOne({'items._id' : req.params.itemId})
+    const {id, itemId} = req.params;
+    TodoList.findOne({_id: id})
     .then((list) => {
-        const item = list.items.find((item) => item._id.toString() === req.params.itemId);
+        const item = list.items.find((item) => item._id.toString() === itemId);
         res.json(item);
     })
     .catch(err => res.status(500).json(err));

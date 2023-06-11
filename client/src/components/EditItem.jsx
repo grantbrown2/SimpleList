@@ -15,18 +15,18 @@ const EditItem = ({onClose, listItemId, itemId, list, setList, updateList}) => {
 
     useEffect(()=> {
          // Fetch the existing item data and set it in the component state
-        axios.get(`http://localhost:8000/api/list/${listItemId}`)
+        axios.get(`http://localhost:8000/api/item/${listItemId}/${itemId}`)
         .then(res => {
-            setItemName(res.data.name);
+            setItemName(res.data.itemName);
             setCategory(res.data.category);
         })
         .catch(err => console.log(err));
-    }, [listItemId]);
+    }, [listItemId, itemId]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validation()) {
-            axios.post(`http://localhost:8000/api/update/item/${listItemId}/${itemId}`, {
+            axios.put(`http://localhost:8000/api/update/item/${listItemId}/${itemId}`, {
                 itemName,
                 category
             })
