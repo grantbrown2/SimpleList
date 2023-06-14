@@ -15,6 +15,16 @@ const NavBar = (props) => {
             .catch((err) => console.log(err))
     }
 
+    const deleteAllLists = () => {
+        const confirmation = window.confirm("Are you sure you want to delete all lists? This Cannot be undone!")
+        if (confirmation) {
+            axios.delete('http://localhost:8000/api/delete/all')
+            .then((res) => {
+                setList([])
+            })
+            .catch((err) => console.log(err))
+        }
+    };
 
     return (
         <div className='nav-bar'>
@@ -23,6 +33,9 @@ const NavBar = (props) => {
                 <p className='credits'>by: Grant Brown</p>
             </div>
             <div className='container'>
+                {list.length > 0 && (
+                    <button className='button' onClick={deleteAllLists}>Delete All Lists</button>
+                )}
                 <button className='button' onClick={AddList}>Add a list</button>
             </div>
         </div>

@@ -56,8 +56,25 @@ module.exports.updateItem = (req, res) => {
     const {id, itemId} = req.params;
     TodoList.findOneAndUpdate(
         {_id : id, 'items._id' : itemId}, // Find the list with the given ID and the matching item ID
-        { $set: { 'items.$.itemName' : req.body.itemName, 'item.$.category' : req.body.category} }, // Update the itemName and category fields of the matched item
+        {
+            $set: {
+                'items.$.itemName': req.body.itemName,
+                'items.$.category': req.body.category,
+                'items.$.isFinished': req.body.isFinished
+            }
+        },
         {new:true, runValidators: true})
         .then(updatedList => res.json(updatedList))
         .catch(err => res.json(err))
 }
+module.exports.deleteItem =(req, res) => {
+    const {id, itemId} = req.params;
+    TodoList.findOneAndUpdate(
+        {_id: id},
+        {$pull: {items: {_id: itemId} } },
+        {new: true} )
+        .then(updatedList => {
+            res.json(updatedList);
+        })
+        .catch(err => res.json(err));
+};

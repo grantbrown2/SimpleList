@@ -8,4 +8,5 @@ module.exports = (app) => {
     app.put('/api/update/item/:id/:itemId', TodoListController.updateItem)
     app.delete('/api/delete/all', TodoListController.deleteALL)
     app.delete('/api/delete/list/:id', TodoListController.deleteList)
+    app.delete('/api/delete/item/:id/:itemId', TodoListController.deleteItem)
 }

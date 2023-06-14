@@ -45,10 +45,12 @@ color: #333;
   border-radius: 5px;
   font-size: 16px;
   transition-duration: 0.3s;
+  margin: 0 5px;
 }
 
 .button:hover {
   background-color: #3e8e41;
   cursor: pointer;
   transform: translateX(5px);
+  border: solid 2px white;
 }

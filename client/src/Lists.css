@@ -1,3 +1,4 @@
+
 .list-container {
     display: flex;
     flex-wrap: wrap;
@@ -11,6 +12,7 @@
     border-radius: 5px;
     margin: 10px;
     transition: transform 0.3s ease-in-out;
+    min-width: 300px;
     max-width: 450px;
 }
 .list:hover {
@@ -28,7 +30,7 @@
     align-items: center;
     justify-content: flex-end;
 }
-.list button.delete-button {
+.list button.delete-button, .delete-button2 {
     background-color: transparent;
     border: none;
     color: inherit;
@@ -40,11 +42,27 @@
     font-weight: bold;
     font-size: 20px;
 }
-.list button.delete-button:hover {
+.list button.delete-button:hover, .delete-button2:hover {
     color: red;
 }
-
-
+.delete-button2 {
+    font-size: 15px;
+}
+.pencil:hover {
+    color: blue;
+}
+.checkbox {
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    transition: border-color 0.2s ease-in-out;
+}
+.checkbox:hover {
+    border-color: blue;
+}
+.finished {
+    text-decoration: line-through;
+}
 ul {
     list-style: none;
     padding: 0;
@@ -53,13 +71,14 @@ ul {
 li {
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
+li:hover {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 li .item-category {
     font-weight: bold;
     margin-right: 10px;
@@ -68,19 +87,3 @@ li .item-category {
 li .item-name {
     flex: 1;
 }
-
-li button {
-    background-color: #ddd;
-    border: none;
-    color: #333;
-    padding: 5px 10px;
-    margin-left: 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-li button:hover {
-    background-color: #bbb;
-}
-

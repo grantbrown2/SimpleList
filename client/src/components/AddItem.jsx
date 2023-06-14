@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react'
 import axios from 'axios'
 import '../AddList.css'
 
@@ -10,9 +9,6 @@ const AddItem = ({onClose, listItemId, list, setList, updateList}) => {
 
     const [NameErrorMessage, setNameErrorMessage] = useState('');
     const [CategoryErrorMessage, setCategoryErrorMessage] = useState('');
-
-    const navigate = useNavigate();
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -76,8 +72,10 @@ const AddItem = ({onClose, listItemId, list, setList, updateList}) => {
                     <label htmlFor="category" className='category-label'>Category:</label>
                     <input type="text" onChange={(e)=>{setCategory(e.target.value)}} onBlur={validation} className='category-input'/>
                 </div>
-                <input type="submit" value="Add Item To List" className='submit-button'/>
-                <button className='cancel-button' onClick={handleCancel}>Cancel</button>
+                <div className="buttons">
+                    <input type="submit" value="Add Item To List" className='submit-button'/>
+                    <button className='cancel-button' onClick={handleCancel}>Cancel</button>
+                </div>
             </form>
         </div>
     )

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import '../AddList.css'
 
@@ -10,8 +9,6 @@ const EditItem = ({onClose, listItemId, itemId, list, setList, updateList}) => {
 
     const [NameErrorMessage, setNameErrorMessage] = useState('');
     const [CategoryErrorMessage, setCategoryErrorMessage] = useState('');
-
-    const navigate = useNavigate();
 
     useEffect(()=> {
          // Fetch the existing item data and set it in the component state
@@ -77,6 +74,10 @@ const EditItem = ({onClose, listItemId, itemId, list, setList, updateList}) => {
         return isValid
     }
 
+    const handleCancel = () => {
+        onClose();
+    }
+
     return (
         <div className='add-list'>
             <form onSubmit={handleSubmit} className='add-form'>
@@ -90,7 +91,10 @@ const EditItem = ({onClose, listItemId, itemId, list, setList, updateList}) => {
                     <label htmlFor="category" className='category-label'>Category:</label>
                     <input type="text" onChange={(e)=>{setCategory(e.target.value)}} value={category} onBlur={validation} className='category-input'/>
                 </div>
-                <input type="submit" value="Update Item" className='submit-button'/>
+                <div className="buttons">
+                    <input type="submit" value="Update Item" className='submit-button'/>
+                    <button className='cancel-button' onClick={handleCancel}>Cancel</button>
+                </div>
             </form>
         </div>
     )
