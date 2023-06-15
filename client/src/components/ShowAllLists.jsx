@@ -171,8 +171,7 @@ const ShowAllLists = (props) => {
                     <ul>
                         {listItem.items.map((item) => (
                             <li key={item._id}>
-                                <span className='item-category'>{item.category}</span>
-                                <br />
+                                <span className={`item-category ${item.isFinished ? 'finished' : ''}`}>{item.category}</span>
                                 <span className={`item-name ${item.isFinished ? 'finished' : ''}`}>{item.itemName}</span>
                                 <input className='checkbox' type="checkbox" checked={item.isFinished} onChange={(event) => handleCheckBoxClick(event, listItem._id, item._id)} data-list-id={listItem._id}/>
                                 <button className='pencil' onClick={() => handleUpdateItemClick(listItem._id, item._id)}><FontAwesomeIcon icon={faPencilAlt} /></button>
