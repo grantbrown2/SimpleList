@@ -19,7 +19,11 @@ const ItemSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 const ListSchema = new mongoose.Schema({
-    items: [ItemSchema]
+    items: [ItemSchema],
+    colorChoice: {
+        type: String,
+        default: '#ffffff'
+    }
 }, {timestamps:true})
 
 

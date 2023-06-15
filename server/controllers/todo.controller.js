@@ -23,6 +23,11 @@ module.exports.deleteList = (req, res) => {
         .then(deleteConfirmation => res.json(deleteConfirmation))
         .catch(err => res.json(err))
 }
+module.exports.updateList = (req, res) => {
+    TodoList.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        .then(updatedList => res.json(updatedList))
+        .catch(err => res.json(err))
+}
 
 module.exports.addItemToList = (req, res) => {
     const {id} = req.params;

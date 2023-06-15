@@ -34,9 +34,9 @@ const NavBar = (props) => {
             </div>
             <div className='container'>
                 {list.length > 0 && (
-                    <button className='button' onClick={deleteAllLists}>Delete All Lists</button>
+                    <button className='button-nav' onClick={deleteAllLists}>Delete All Lists</button>
                 )}
-                <button className='button' onClick={AddList}>Add a list</button>
+                <button className='button-nav' onClick={AddList}>Add a list</button>
             </div>
         </div>
     )

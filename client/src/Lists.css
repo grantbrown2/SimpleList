@@ -88,6 +88,19 @@ li .item-category {
 li .item-name {
     flex: 1;
 }
+.button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition-duration: 0.3s;
+    margin: 0 5px;
+}
 .button:hover {
+    background-color: #3e8e41;
+    cursor: pointer;
+    transform: translateX(5px);
     border: black solid 1px;
 }

@@ -37,7 +37,7 @@ transition: all 0.3s ease-in-out;
 background-color: white;
 color: #333;
 }
-.button {
+.button-nav {
   padding: 10px 20px;
   background-color: #4CAF50;
   color: white;
@@ -48,7 +48,7 @@ color: #333;
   margin: 0 5px;
 }
 
-.button:hover {
+.button-nav:hover {
   background-color: #3e8e41;
   cursor: pointer;
   transform: translateX(5px);
