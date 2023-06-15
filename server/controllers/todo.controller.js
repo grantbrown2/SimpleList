@@ -24,7 +24,13 @@ module.exports.deleteList = (req, res) => {
         .catch(err => res.json(err))
 }
 module.exports.updateList = (req, res) => {
-    TodoList.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    const {id} = req.params;
+    const {colorChoice} = req.body;
+    TodoList.findByIdAndUpdate(
+        id,
+        {colorChoice},
+        {new: true}
+    )
         .then(updatedList => res.json(updatedList))
         .catch(err => res.json(err))
 }

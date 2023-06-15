@@ -22,7 +22,7 @@ const ListSchema = new mongoose.Schema({
     items: [ItemSchema],
     colorChoice: {
         type: String,
-        default: '#ffffff'
+        default: '#FFF9C4'
     }
 }, {timestamps:true})
 

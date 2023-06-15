@@ -9,6 +9,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 const ShowAllLists = (props) => {
 
     const { list, setList} = props;
+    const [selectedColors, setSelectedColors] = useState({});
 
     useEffect(()=> {
         axios.get('http://localhost:8000/api/list')
@@ -81,10 +82,6 @@ const ShowAllLists = (props) => {
         }));
     };
 
-    const deleteList = (id) => {
-        return axios.delete(`http://localhost:8000/api/delete/list/${id}`);
-    };
-
     const handleDeleteClick = (id) => {
         deleteList(id)
             .then(() => {
@@ -93,6 +90,10 @@ const ShowAllLists = (props) => {
             .catch(err => {
                 console.log(err);
             });
+    };
+
+    const deleteList = (id) => {
+        return axios.delete(`http://localhost:8000/api/delete/list/${id}`);
     };
 
     const deleteItem = (id, itemId) => {
@@ -159,12 +160,29 @@ const ShowAllLists = (props) => {
             .catch((err) => {console.log(err)});
     };
 
+    const handleColorChange = (listItemId, color) => {
+        setSelectedColors((prevSelectedColors) => ({
+            ...prevSelectedColors,
+            [listItemId]: color
+        }));
+        axios.put(`http://localhost:8000/api/update/list/${listItemId}`, {
+            colorChoice: color
+        })
+        .then((res) => {
+            setList((prevList) => 
+            prevList.map((listItem) => 
+                listItem._id === listItemId ? {...listItem, colorChoice: color} : listItem
+            ));
+        })
+        .catch((err) => {console.log(err)});
+    };
 
     return (
         <div className='list-container'>
             {list.map((listItem) => (
-                <div key={listItem._id} className='list'>
-                    <div className='test'>
+                <div key={listItem._id} className='list' style={{backgroundColor: listItem.colorChoice}}>
+                    <div className='list-header'>
+                        <input className='color-picker' type='color' value={listItem.colorChoice || '#000000'} onChange={(e) => handleColorChange(listItem._id, e.target.value)} />
                         <h2 className='list-date'>{new Date(listItem.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric' })}</h2>
                         <button className='delete-button' onClick={()=> handleDeleteClick(listItem._id)}>X</button>
                     </div>
