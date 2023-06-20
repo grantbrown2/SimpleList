@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import NavBar from '../components/NavBar';
 import ShowAllLists from '../components/ShowAllLists';
-import { gapi } from 'gapi-client';
 import axios from 'axios';
 
 const getYoutubeVideoId = (url) => {
     // Extracts the video ID from a YouTube URL
-    const videoIdMatch = url.match(/(?:[?&]|\b)(v|embed|watch)\=(.*?)(?:$|&|\s|\?)/);
-    return videoIdMatch && videoIdMatch[2];
+    const match = url.match(/(?:\?v=|&v=|youtu\.be\/|\/v\/|\/embed\/|\/watch\?v=|&v=|embed\/|youtu\.be\/|v\/)([^#]{11})/);
+    return match && match[1];
 }
 
 const Main = () => {
@@ -17,47 +16,47 @@ const Main = () => {
     const [thumbnailUrl, setThumbnailUrl] = useState('');
     const APIKey = "AIzaSyDLh_5G8XD8s7D5Ri71R5Y0IWroFf0i2XE";
     
-    useEffect(()=> {
+    useEffect(() => {
         axios.get('https://api.nasa.gov/planetary/apod?api_key=fwfMdH9qdIyadVMyR7VOGokoR3QrMKDeNK7p5B5z')
-        .then((res) => {
-            if (res.data.media_type === 'video') {
-                console.log("background is a video")
-                fetchYoutubeThumbnail(res.data.url);
-            }
-            if (res.data.media_type === 'image') {
-                setURL(res.data.url)
-            }
-        })
-        .catch((err) => console.log(err))
-    }, []);
-
-    const fetchYoutubeThumbnail = (videoUrl) => {
-        const videoId = getYoutubeVideoId(videoUrl);
-        console.log('Video ID:', videoId);
-        if (videoId) {
-            gapi.load('client', ()=> {
-                gapi.client.setApiKey(APIKey);
-                gapi.client.youtube.videos.list({
-                    part:'snippet',
-                    id: videoId
-                })
-                .then((res) => {
-                    console.log('YouTube API response:', res.result);
-                    const thumbnailUrl = res.result.items[0].snippet.thumbnails.default.url;
-                    console.log('Thumbnail URL:', thumbnailUrl);
-                    setThumbnailUrl(thumbnailUrl);
+            .then((res) => {
+                const apod = res.data;
+                if (apod.media_type === 'video') {
+                    const videoId = getYoutubeVideoId(apod.url);
+                    console.log(videoId)
+                    window.gapi.load('client', () => {
+                        window.gapi.client.setApiKey(APIKey);
+                        window.gapi.client.load('youtube', 'v3', ()=> {
+                            window.gapi.client.youtube.videos.list({
+                                part: 'snippet',
+                                id: videoId
+                            })
+                            .then((res) => {
+                                console.log('YouTube API response:', res.result);
+                                const thumbnailUrl = res.result.items[0].snippet.thumbnails.default.url;
+                                console.log('Thumbnail URL:', thumbnailUrl);
+                                setThumbnailUrl(thumbnailUrl);
+                            })
+                            .catch((err) => console.log(err));
+                        });
+                    });
+                } else {
+                    setURL(apod.url);
+                }
             })
             .catch((err) => console.log(err));
-            });
-        }
-    };
+    }, []);
 
     const backgroundImageStyle = {
-        backgroundImage: `url(${URL})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100vh',
         width: '100vw'
+    };
+
+    if (thumbnailUrl) {
+        backgroundImageStyle.backgroundImage = `url(${thumbnailUrl})`;
+    } else if (URL) {
+        backgroundImageStyle.backgroundImage = `url(${URL})`;
     }
 
     const pStyle = {
@@ -67,6 +66,11 @@ const Main = () => {
         left: '50%',
         transform: 'translateX(-50%)',
         fontSize: '10px',
+    }
+
+    const thumbnailStyle = {
+        maxWidth: '100%',
+        maxHeight: '100%'
     }
 
     return (

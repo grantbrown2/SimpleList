@@ -183,13 +183,10 @@ const ShowAllLists = (props) => {
                 <div key={listItem._id} className='list' style={{backgroundColor: listItem.colorChoice}}>
                     <div className='list-header'>
                         <input className='color-picker' type='color' value={listItem.colorChoice || '#000000'} onChange={(e) => handleColorChange(listItem._id, e.target.value)} />
-
-                        <label class="switch">
+                        <label className="switch">
                             <input type="checkbox" />
-                                <span class="slider round"></span>
+                                <span className="slider round"></span>
                         </label>
-
-
                         <h2 className='list-date'>{new Date(listItem.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric' })}</h2>
                         <button className='delete-button' onClick={()=> handleDeleteClick(listItem._id)}>X</button>
                     </div>
