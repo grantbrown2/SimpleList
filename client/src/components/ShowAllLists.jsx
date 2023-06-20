@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import '../Lists.css';
 import axios from 'axios'
 import AddItem from './AddItem';
@@ -9,7 +9,6 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 const ShowAllLists = (props) => {
 
     const { list, setList} = props;
-    const [selectedColors, setSelectedColors] = useState({});
 
     useEffect(()=> {
         axios.get('http://localhost:8000/api/list')
@@ -161,10 +160,6 @@ const ShowAllLists = (props) => {
     };
 
     const handleColorChange = (listItemId, color) => {
-        setSelectedColors((prevSelectedColors) => ({
-            ...prevSelectedColors,
-            [listItemId]: color
-        }));
         axios.put(`http://localhost:8000/api/update/list/${listItemId}`, {
             colorChoice: color
         })
